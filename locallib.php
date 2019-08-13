@@ -89,11 +89,12 @@ function local_metagroups_sync(progress_trace $trace, $courseid = null) {
 
             $groups = groups_get_all_groups($child->id);
             foreach ($groups as $group) {
-                if (! $metagroup = $DB->get_record('groups', array('courseid' => $parent->id, 'idnumber' => $group->id))) {
+                if (! $metagroup = $DB->get_record('groups', array('courseid' => $parent->id, 'idnumber' => $group->idnumber))) {
                     $metagroup = new stdClass();
                     $metagroup->courseid = $parent->id;
-                    $metagroup->idnumber = $group->id;
+                    $metagroup->idnumber = $group->idnumber;
                     $metagroup->name = $group->name;
+                    $metagroup->description = $group->description;
 
                     $metagroup->id = groups_create_group($metagroup, false, false);
                 }
